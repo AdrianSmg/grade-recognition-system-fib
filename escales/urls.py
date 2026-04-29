@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path("", views.main, name="main"),
-    path("<int:id_escala>/", views.id, name="id"),
+    path("<int:id_esc>/", views.id, name="id"),
 ]

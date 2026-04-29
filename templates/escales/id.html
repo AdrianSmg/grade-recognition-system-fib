@@ -1,11 +1,61 @@
-<!DOCTYPE>
-<html>
+<!DOCTYPE html>
+<html lang="ca">
 <head>
-  <title></title>
+  <meta charset="UTF-8">
+  <title>Conversor</title>
 </head>
 <body>
-  <h1>Conversor</h1>
-  <p>{{ escala_act.nom_pais }}</p>
+
+  <h1>Conversor de {{ escala_act.nom_pais }}</h1>
+
+  <label for="valor_origen">Valor d'origen</label>
+  <input 
+    type="text" 
+    id="valor_origen" 
+    name="valor_origen" 
+    placeholder="Introdueix el valor"
+  >
+
+  <label for="valor_upc">Valor UPC</label>
+  <input 
+    type="text" 
+    id="valor_upc" 
+    name="valor_upc" 
+    readonly
+    placeholder="Resultat"
+  >
+
+  <h2>Taula de valors</h2>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Valor origen</th>
+        <th>Valor UPC</th>
+        <th>Matrícula</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for valor in valors_escala_act %}
+        <tr>
+          <td>{{ valor.valor_origen }}</td>
+          <td>{{ valor.valor_upc }}</td>
+          <td>
+            {% if valor.matricula %}
+              Sí
+            {% else %}
+              No
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="3">No hi ha valors per aquesta escala.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
 </body>
 </html>
 

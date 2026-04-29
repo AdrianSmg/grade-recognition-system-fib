@@ -12,3 +12,6 @@ class ValorEscala(models.Model):
     valor_origen = models.CharField(max_length=10)
     valor_upc = models.DecimalField(max_digits=4, decimal_places=2)
     matricula = models.BooleanField()
+
+    class Meta:
+        unique_together = ("id_escala", "valor_origen")
