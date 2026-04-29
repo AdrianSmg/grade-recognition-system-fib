@@ -8,8 +8,8 @@ def main(request):
 
 
 def id(request, id_escala):
-    id_act = get_object_or_404(Escala, id=id_escala)
+    escala_act = get_object_or_404(Escala, id=id_escala)
     context = {
-        "id_act": id_act,
+        "escala_act": escala_act,
     }
     return render(request, "escales/id.html", context)
