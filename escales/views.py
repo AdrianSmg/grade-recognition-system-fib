@@ -1,18 +1,15 @@
-from django.shortcuts import render
-from django.template import loader
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 from .models import Escala
 
 
 # Create your views here.
 def main(request):
-    pass
+    return render(request, "main.html")
 
 
-def id(request):
-    id_act = Escala.objects.get(id=id)
-    template = loader.get_template("id.html")
+def id(request, id_escala):
+    id_act = get_object_or_404(Escala, id=id_escala)
     context = {
         "id_act": id_act,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, "escales/id.html", context)
