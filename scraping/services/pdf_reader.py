@@ -77,9 +77,10 @@ def extract_escala(text):
     return None
 
 
-def read_pdf(file_name, header_crop, end_crop):
+def read_pdf(file_name, header_crop, end_crop, clear):
 
-    clear_models()
+    if clear:
+        clear_models()
     result = []
     with pdfplumber.open(file_name) as pdf:
         for page_number, page in enumerate(

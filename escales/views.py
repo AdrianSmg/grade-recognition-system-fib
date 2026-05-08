@@ -10,7 +10,7 @@ def main(request):
 def id(request, pais, id_esc):
     escala_act = get_object_or_404(Escala, nom_pais=pais, id_escala=id_esc)
     valors_escala_act = ValorEscala.objects.filter(
-        escala__nom_pais=pais, escala__id_escala=id_esc
+        escala=escala_act,
     )
     context = {
         "escala_act": escala_act,
