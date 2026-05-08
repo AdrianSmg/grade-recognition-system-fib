@@ -11,6 +11,7 @@ def escales(request):
         escales_by_country[escala.nom_pais].append(escala)
     context = {
         "escales_by_country": dict(escales_by_country),
+        "total_escales": escales.count(),
     }
     return render(request, "escales/escales.html", context)
 

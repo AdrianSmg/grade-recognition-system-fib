@@ -1,8 +1,11 @@
-from escala.models import ValorEscala
-
+from escales.models import ValorEscala
 
 def grade_converter(escala, origen):
-
-    val_esc = ValorEscala.objects.get(id_escala=escala, valor_origen=origen)
-    result = val_esc.valor_upc
-    return result
+    try:
+        val_esc = ValorEscala.objects.get(
+            escala=escala,
+            valor_origen=origen,
+        )
+        return val_esc.valor_upc
+    except ValorEscala.DoesNotExist:
+        return None
