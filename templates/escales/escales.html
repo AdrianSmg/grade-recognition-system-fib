@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Escales disponibles</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css"
+  />
+
+  <style>
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 40px auto;
+      padding: 24px;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 36px;
+      font-size: 16px;
+    }
+
+    .country-block {
+      background: white;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      transition: all 0.2s ease;
+    }
+
+    .country-block:hover {
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    details summary {
+      list-style: none;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .country-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 22px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .country-header:hover {
+      background: #f9fafb;
+    }
+
+    .flag {
+      width: 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+    }
+
+    .country-name {
+      flex: 1;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .count {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .scale-list {
+      border-top: 1px solid #e5e7eb;
+      padding: 10px 22px 22px 22px;
+    }
+
+    .scale-link {
+      display: block;
+      text-decoration: none;
+      color: #111827;
+      background: #f9fafb;
+      padding: 14px 18px;
+      border-radius: 12px;
+      margin-top: 10px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .scale-link:hover {
+      background: white;
+      border-color: #d1d5db;
+      transform: translateX(4px);
+    }
+
+    .empty {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    @media (max-width: 700px) {
+
+      .container {
+        margin: 20px auto;
+        padding: 16px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .country-name {
+        font-size: 20px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <h1>Escales disponibles</h1>
+
+    <p class="subtitle">
+      Selecciona una escala per convertir qualificacions internacionals.
+    </p>
+
+    {% if escales_by_country %}
+
+      {% for pais, escalas in escales_by_country.items %}
+
+        <details class="country-block">
+
+          <summary class="country-header">
+
+            <div class="flag">
+
+              {% if pais == "AFGANISTAN" %}
+                <span class="fi fi-af"></span>
+
+              {% elif pais == "ALBANIA" %}
+                <span class="fi fi-al"></span>
+
+              {% elif pais == "ALEMANIA" %}
+                <span class="fi fi-de"></span>
+
+              {% elif pais == "ANDORRA" %}
+                <span class="fi fi-ad"></span>
+
+              {% elif pais == "ANGOLA" %}
+                <span class="fi fi-ao"></span>
+
+              {% elif pais == "ARABIA SAUDITA" %}
+                <span class="fi fi-sa"></span>
+
+              {% elif pais == "ARGELIA" %}
+                <span class="fi fi-dz"></span>
+
+              {% elif pais == "ARGENTINA" %}
+                <span class="fi fi-ar"></span>
+
+              {% elif pais == "ARMENIA" %}
+                <span class="fi fi-am"></span>
+
+              {% elif pais == "AUSTRALIA" %}
+                <span class="fi fi-au"></span>
+
+              {% elif pais == "AUSTRIA" %}
+                <span class="fi fi-at"></span>
+
+              {% elif pais == "AZERBAIYAN" %}
+                <span class="fi fi-az"></span>
+
+              {% elif pais == "BANGLADESH" %}
+                <span class="fi fi-bd"></span>
+
+              {% elif pais == "BELGICA" %}
+                <span class="fi fi-be"></span>
+
+              {% elif pais == "BELICE" %}
+                <span class="fi fi-bz"></span>
+
+              {% elif pais == "BENIN" %}
+                <span class="fi fi-bj"></span>
+
+              {% elif pais == "BIELORRUSIA" %}
+                <span class="fi fi-by"></span>
+
+              {% elif pais == "BOLIVIA" %}
+                <span class="fi fi-bo"></span>
+
+              {% elif pais == "BOSNIA HERZEGOVINA" %}
+                <span class="fi fi-ba"></span>
+
+              {% elif pais == "BRASIL" %}
+                <span class="fi fi-br"></span>
+
+              {% elif pais == "BULGARIA" %}
+                <span class="fi fi-bg"></span>
+
+              {% elif pais == "CABO VERDE" %}
+                <span class="fi fi-cv"></span>
+
+              {% elif pais == "CAMBOYA" %}
+                <span class="fi fi-kh"></span>
+
+              {% elif pais == "CAMERUN" %}
+                <span class="fi fi-cm"></span>
+
+              {% elif pais == "CANADA" %}
+                <span class="fi fi-ca"></span>
+
+              {% elif pais == "CHILE" %}
+                <span class="fi fi-cl"></span>
+
+              {% elif pais == "CHINA" %}
+                <span class="fi fi-cn"></span>
+
+              {% elif pais == "CHINA TAIPEI" %}
+                <span class="fi fi-tw"></span>
+
+              {% elif pais == "CHIPRE" %}
+                <span class="fi fi-cy"></span>
+
+              {% elif pais == "COLOMBIA" %}
+                <span class="fi fi-co"></span>
+
+              {% elif pais == "COSTA RICA" %}
+                <span class="fi fi-cr"></span>
+
+              {% elif pais == "CROACIA" %}
+                <span class="fi fi-hr"></span>
+
+              {% elif pais == "CUBA" %}
+                <span class="fi fi-cu"></span>
+
+              {% elif pais == "DINAMARCA" %}
+                <span class="fi fi-dk"></span>
+
+              {% elif pais == "ECUADOR" %}
+                <span class="fi fi-ec"></span>
+
+              {% elif pais == "EGIPTO" %}
+                <span class="fi fi-eg"></span>
+
+              {% elif pais == "EL SALVADOR" %}
+                <span class="fi fi-sv"></span>
+
+              {% elif pais == "EMIRATOS ARABES UNIDOS" %}
+                <span class="fi fi-ae"></span>
+
+              {% elif pais == "ESPANA" %}
+                <span class="fi fi-es"></span>
+
+              {% elif pais == "ESTADOS UNIDOS DE AMERICA" %}
+                <span class="fi fi-us"></span>
+
+              {% elif pais == "FRANCIA" %}
+                <span class="fi fi-fr"></span>
+
+              {% elif pais == "INDIA" %}
+                <span class="fi fi-in"></span>
+
+              {% elif pais == "ITALIA" %}
+                <span class="fi fi-it"></span>
+
+              {% elif pais == "JAPON" %}
+                <span class="fi fi-jp"></span>
+
+              {% elif pais == "MEXICO" %}
+                <span class="fi fi-mx"></span>
+
+              {% elif pais == "PAISES BAJOS" %}
+                <span class="fi fi-nl"></span>
+
+              {% elif pais == "PORTUGAL" %}
+                <span class="fi fi-pt"></span>
+
+              {% elif pais == "REINO UNIDO" %}
+                <span class="fi fi-gb"></span>
+
+              {% elif pais == "REPUBLICA CHECA" %}
+                <span class="fi fi-cz"></span>
+
+              {% elif pais == "REPUBLICA DE COREA" %}
+                <span class="fi fi-kr"></span>
+
+              {% elif pais == "RUSIA" %}
+                <span class="fi fi-ru"></span>
+
+              {% elif pais == "SINGAPUR" %}
+                <span class="fi fi-sg"></span>
+
+              {% elif pais == "SUECIA" %}
+                <span class="fi fi-se"></span>
+
+              {% elif pais == "SUIZA" %}
+                <span class="fi fi-ch"></span>
+
+              {% elif pais == "TURQUIA" %}
+                <span class="fi fi-tr"></span>
+
+              {% elif pais == "UCRANIA" %}
+                <span class="fi fi-ua"></span>
+
+              {% elif pais == "URUGUAY" %}
+                <span class="fi fi-uy"></span>
+
+              {% elif pais == "VENEZUELA" %}
+                <span class="fi fi-ve"></span>
+
+              {% elif pais == "VIETNAM" %}
+                <span class="fi fi-vn"></span>
+
+              {% elif pais == "ERITREA" %}
+                <span class="fi fi-er"></span>
+
+              {% elif pais == "ESLOVAQUIA" %}
+                <span class="fi fi-sk"></span>
+
+              {% elif pais == "ESLOVENIA" %}
+                <span class="fi fi-si"></span>
+
+              {% elif pais == "ESTONIA" %}
+                <span class="fi fi-ee"></span>
+
+              {% elif pais == "ETIOPIA" %}
+                <span class="fi fi-et"></span>
+
+              {% elif pais == "FIJI" %}
+                <span class="fi fi-fj"></span>
+
+              {% elif pais == "FILIPINAS" %}
+                <span class="fi fi-ph"></span>
+
+              {% elif pais == "FINLANDIA" %}
+                <span class="fi fi-fi"></span>
+
+              {% elif pais == "GABON" %}
+                <span class="fi fi-ga"></span>
+
+              {% elif pais == "GEORGIA" %}
+                <span class="fi fi-ge"></span>
+
+              {% elif pais == "GHANA" %}
+                <span class="fi fi-gh"></span>
+
+              {% elif pais == "GRECIA" %}
+                <span class="fi fi-gr"></span>
+
+              {% elif pais == "GUATEMALA" %}
+                <span class="fi fi-gt"></span>
+
+              {% elif pais == "GUINEA" %}
+                <span class="fi fi-gn"></span>
+
+              {% elif pais == "GUINEA ECUATORIAL" %}
+                <span class="fi fi-gq"></span>
+
+              {% elif pais == "GUINEA-BISSAU" %}
+                <span class="fi fi-gw"></span>
+
+              {% elif pais == "HONDURAS" %}
+                <span class="fi fi-hn"></span>
+
+              {% elif pais == "HONG KONG" %}
+                <span class="fi fi-hk"></span>
+
+              {% elif pais == "HUNGRIA" %}
+                <span class="fi fi-hu"></span>
+
+              {% elif pais == "INDONESIA" %}
+                <span class="fi fi-id"></span>
+
+              {% elif pais == "IRAN" %}
+                <span class="fi fi-ir"></span>
+
+              {% elif pais == "IRAQ" %}
+                <span class="fi fi-iq"></span>
+
+              {% elif pais == "IRLANDA" %}
+                <span class="fi fi-ie"></span>
+
+              {% elif pais == "ISLANDIA" %}
+                <span class="fi fi-is"></span>
+
+              {% elif pais == "ISRAEL" %}
+                <span class="fi fi-il"></span>
+
+              {% elif pais == "JAMAICA" %}
+                <span class="fi fi-jm"></span>
+
+              {% elif pais == "JORDANIA" %}
+                <span class="fi fi-jo"></span>
+
+              {% elif pais == "KAZAJSTAN" %}
+                <span class="fi fi-kz"></span>
+
+              {% elif pais == "KENIA" %}
+                <span class="fi fi-ke"></span>
+
+              {% elif pais == "KIRGUISTAN" %}
+                <span class="fi fi-kg"></span>
+
+              {% elif pais == "LETONIA" %}
+                <span class="fi fi-lv"></span>
+
+              {% elif pais == "LIBANO" %}
+                <span class="fi fi-lb"></span>
+
+              {% elif pais == "LIBIA" %}
+                <span class="fi fi-ly"></span>
+
+              {% elif pais == "LITUANIA" %}
+                <span class="fi fi-lt"></span>
+
+              {% elif pais == "LUXEMBURGO" %}
+                <span class="fi fi-lu"></span>
+
+              {% elif pais == "MACAO" %}
+                <span class="fi fi-mo"></span>
+
+              {% elif pais == "MACEDONIA" %}
+                <span class="fi fi-mk"></span>
+
+              {% elif pais == "MADAGASCAR" %}
+                <span class="fi fi-mg"></span>
+
+              {% elif pais == "MALASIA" %}
+                <span class="fi fi-my"></span>
+
+              {% elif pais == "MALTA" %}
+                <span class="fi fi-mt"></span>
+
+              {% elif pais == "MARRUECOS" %}
+                <span class="fi fi-ma"></span>
+
+              {% elif pais == "MAURITANIA" %}
+                <span class="fi fi-mr"></span>
+
+              {% elif pais == "MONGOLIA" %}
+                <span class="fi fi-mn"></span>
+
+              {% elif pais == "MONTENEGRO" %}
+                <span class="fi fi-me"></span>
+
+              {% elif pais == "MOZAMBIQUE" %}
+                <span class="fi fi-mz"></span>
+
+              {% elif pais == "NAMIBIA" %}
+                <span class="fi fi-na"></span>
+
+              {% elif pais == "NEPAL" %}
+                <span class="fi fi-np"></span>
+
+              {% elif pais == "NICARAGUA" %}
+                <span class="fi fi-ni"></span>
+
+              {% elif pais == "NIGERIA" %}
+                <span class="fi fi-ng"></span>
+
+              {% elif pais == "NORUEGA" %}
+                <span class="fi fi-no"></span>
+
+              {% elif pais == "NUEVA ZELANDA" %}
+                <span class="fi fi-nz"></span>
+
+              {% elif pais == "PAKISTAN" %}
+                <span class="fi fi-pk"></span>
+
+              {% elif pais == "PALESTINA" %}
+                <span class="fi fi-ps"></span>
+
+              {% elif pais == "PANAMA" %}
+                <span class="fi fi-pa"></span>
+
+              {% elif pais == "PARAGUAY" %}
+                <span class="fi fi-py"></span>
+
+              {% elif pais == "PERU" %}
+                <span class="fi fi-pe"></span>
+
+              {% elif pais == "POLONIA" %}
+                <span class="fi fi-pl"></span>
+
+              {% elif pais == "PUERTO RICO" %}
+                <span class="fi fi-pr"></span>
+
+              {% elif pais == "REPUBLICA DE MOLDAVIA" %}
+                <span class="fi fi-md"></span>
+
+              {% elif pais == "REPUBLICA DE SERBIA" %}
+                <span class="fi fi-rs"></span>
+
+              {% elif pais == "REPUBLICA DEL YEMEN" %}
+                <span class="fi fi-ye"></span>
+
+              {% elif pais == "REPUBLICA DEMOCRATICA DEL CONGO" %}
+                <span class="fi fi-cd"></span>
+
+              {% elif pais == "REPUBLICA DOMINICANA" %}
+                <span class="fi fi-do"></span>
+
+              {% elif pais == "REPUBLICA SUDAFRICANA" %}
+                <span class="fi fi-za"></span>
+
+              {% elif pais == "RUANDA" %}
+                <span class="fi fi-rw"></span>
+
+              {% elif pais == "RUMANIA" %}
+                <span class="fi fi-ro"></span>
+
+              {% elif pais == "SANTO TOME Y PRINCIPE" %}
+                <span class="fi fi-st"></span>
+
+              {% elif pais == "SENEGAL" %}
+                <span class="fi fi-sn"></span>
+
+              {% elif pais == "SIRIA" %}
+                <span class="fi fi-sy"></span>
+
+              {% elif pais == "SRI LANKA" %}
+                <span class="fi fi-lk"></span>
+
+              {% elif pais == "SUDÁN" %}
+                <span class="fi fi-sd"></span>
+
+              {% elif pais == "TAILANDIA" %}
+                <span class="fi fi-th"></span>
+
+              {% elif pais == "TANZANIA" %}
+                <span class="fi fi-tz"></span>
+
+              {% elif pais == "TAYIKISTAN" %}
+                <span class="fi fi-tj"></span>
+
+              {% elif pais == "TOGO" %}
+                <span class="fi fi-tg"></span>
+
+              {% elif pais == "TUNEZ" %}
+                <span class="fi fi-tn"></span>
+
+              {% elif pais == "TURKMENISTAN" %}
+                <span class="fi fi-tm"></span>
+
+              {% elif pais == "UGANDA" %}
+                <span class="fi fi-ug"></span>
+
+              {% elif pais == "UZBEKISTAN" %}
+                <span class="fi fi-uz"></span>
+
+              {% elif pais == "VATICANO" %}
+                <span class="fi fi-va"></span>
+
+              {% elif pais == "ZAMBIA" %}
+                <span class="fi fi-zm"></span>
+
+              {% elif pais == "ZIMBABWE" %}
+                <span class="fi fi-zw"></span>
+
+              {% else %}
+                🌍
+              {% endif %}
+
+            </div>
+
+            <div class="country-name">
+              {{ pais }}
+            </div>
+
+            <div class="count">
+              {% if escalas|length == 1 %}
+                {{ escalas|length }} escala
+              {% else %}
+                {{ escalas|length }} escales
+              {% endif %}
+            </div>
+
+          </summary>
+
+          <div class="scale-list">
+
+            {% for escala in escalas %}
+
+              <a
+                class="scale-link"
+                href="{% url 'id' slug=escala.slug %}"
+              >
+                {{ escala.id_escala }}
+              </a>
+
+            {% endfor %}
+
+          </div>
+
+        </details>
+
+      {% endfor %}
+
+    {% else %}
+
+      <div class="empty">
+        No hi ha escales disponibles.
+      </div>
+
+    {% endif %}
+
+  </main>
+
+</body>
+
+</html>

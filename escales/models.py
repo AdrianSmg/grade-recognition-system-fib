@@ -1,9 +1,17 @@
 from django.db import models
+from django.utils.text import slugify
 
 
 class Escala(models.Model):
     nom_pais = models.CharField(max_length=30)
     id_escala = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=150, unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+
+        if not self.slug:
+            self.slug = slugify(f"{self.nom_pais}-{self.id_escala}")
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.nom_pais} - {self.id_escala}"
