@@ -1,5 +1,5 @@
 import pdfplumber
-from escales.models import Escala, ValorEscala, Pagina
+from escales.models import Escala, ValorEscala, Pagina, Pais
 
 HEADER_CROP = 27
 END_CROP = 7426
@@ -10,6 +10,7 @@ def clear_models():
     ValorEscala.objects.all().delete()
     Pagina.objects.all().delete()
     Escala.objects.all().delete()
+    Pais.objects.all().delete()
 
 
 def parse_decimal(value):
@@ -34,8 +35,11 @@ def save_escala(data):
 
     if not data["pais"] or not data["escala"]:
         return None, None
-    new_escala, escala_created = Escala.objects.update_or_create(
+    new_pais, pais_created = Pais.objects.get_or_create(
         nom_pais=data["pais"],
+    )
+    new_escala, escala_created = Escala.objects.get_or_create(
+        nom_pais=new_pais,
         id_escala=data["escala"],
     )
     if len(data["taules"]) >= 3:

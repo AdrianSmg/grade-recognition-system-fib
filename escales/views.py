@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Escala, ValorEscala
+from .models import Escala, ValorEscala, Universitat
 from collections import defaultdict
 
 
@@ -21,8 +21,12 @@ def id(request, slug):
     valors_escala_act = ValorEscala.objects.filter(
         escala=escala_act,
     )
+    universitats = Universitat.objects.filter(
+        escala=escala_act,
+    )
     context = {
         "escala_act": escala_act,
         "valors_escala_act": valors_escala_act,
+        "universitats": universitats,
     }
     return render(request, "escales/id.html", context)
