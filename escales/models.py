@@ -27,7 +27,13 @@ class Escala(models.Model):
     def save(self, *args, **kwargs):
 
         if not self.slug:
-            self.slug = slugify(f"{self.nom_pais}-{self.id_escala}")
+            base_slug = slugify(f"{self.nom_pais}-{self.id_escala}")
+            slug = base_slug
+            counter = 1
+            while Escala.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -68,8 +74,10 @@ class Pagina(models.Model):
 
 class Universitat(models.Model):
     codi_universitat = models.CharField(max_length=20, primary_key=True)
-    nom_universitat = models.CharField(max_length=50)
-    facultat = models.CharField(max_length=30, blank=True)
+    nom_universitat = models.CharField(max_length=100)
+    facultat = models.CharField(max_length=100, blank=True)
+    programa = models.CharField(max_length=20, null=True, blank=True)
+    pais = models.ForeignKey(Pais, on_delete=models.PROTECT, null=True, blank=True)
     escala = models.ForeignKey(Escala, on_delete=models.PROTECT, null=True, blank=True)
     slug = models.SlugField(max_length=50, unique=True, blank=True)
 
