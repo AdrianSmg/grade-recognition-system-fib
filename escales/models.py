@@ -48,7 +48,7 @@ class Escala(models.Model):
 class ValorEscala(models.Model):
     escala = models.ForeignKey(Escala, on_delete=models.CASCADE)
     valor_origen = models.CharField(max_length=10)
-    valor_upc = models.DecimalField(max_digits=4, decimal_places=2)
+    valor_upc = models.DecimalField(max_digits=6, decimal_places=2)
     matricula = models.BooleanField()
 
     def __str__(self):
@@ -76,9 +76,9 @@ class Universitat(models.Model):
     codi_universitat = models.CharField(max_length=20, primary_key=True)
     nom_universitat = models.CharField(max_length=100)
     facultat = models.CharField(max_length=100, blank=True)
-    programa = models.CharField(max_length=20, null=True, blank=True)
+    programa = models.CharField(max_length=40, null=True, blank=True)
     pais = models.ForeignKey(Pais, on_delete=models.PROTECT, null=True, blank=True)
-    escala = models.ForeignKey(Escala, on_delete=models.PROTECT, null=True, blank=True)
+    escala = models.ManyToManyField(Escala, blank=True)
     slug = models.SlugField(max_length=50, unique=True, blank=True)
 
     def save(self, *args, **kwargs):
