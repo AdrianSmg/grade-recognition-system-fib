@@ -30,3 +30,39 @@ def id(request, slug):
         "universitats": universitats,
     }
     return render(request, "escales/id.html", context)
+
+
+def universitats(request):
+    universitats = Universitat.objects.all().order_by(
+        "pais__nom_pais", "nom_universitat"
+    )
+    universitats_by_country = defaultdict(list)
+    for universitat in universitats:
+        if universitat.pais:
+            universitats_by_country[universitat.pais].append(universitat)
+        else:
+            universitats_by_country["Sense país assignat"].append(universitat)
+    context = {
+        "universitats_by_country": dict(universitats_by_country),
+        "total_universitats": universitats.count(),
+    }
+    return render(request, "escales/universitats.html", context)
+
+
+def id_universitat(request, slug):
+    universitat = get_object_or_404(Universitat, slug=slug)
+    escales = universitat.escala.all()
+    escales_amb_valors = []
+    for escala in escales:
+        valors = ValorEscala.objects.filter(escala=escala)
+        escales_amb_valors.append(
+            {
+                "escala": escala,
+                "valors": valors,
+            }
+        )
+    context = {
+        "universitat": universitat,
+        "escales_amb_valors": escales_amb_valors,
+    }
+    return render(request, "escales/id_universitat.html", context)

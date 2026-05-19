@@ -79,6 +79,7 @@ class Universitat(models.Model):
     programa = models.CharField(max_length=40, null=True, blank=True)
     pais = models.ForeignKey(Pais, on_delete=models.PROTECT, null=True, blank=True)
     escala = models.ManyToManyField(Escala, blank=True)
+    domini = models.CharField(max_length=100, blank=True)
     slug = models.SlugField(max_length=50, unique=True, blank=True)
 
     def save(self, *args, **kwargs):
