@@ -63,12 +63,20 @@
 <body>
   {% include "includes/navbar.html" %}
   <main class="container mt-5">
-    <a href="{% url 'escales' %}" class="btn btn-primary mb-4">
-      ← Tornar a les escales
+    <a href="{% url 'universitats' %}" class="btn btn-primary mb-4">
+      ← Tornar a les universitats
     </a>
-    <h1 class="page-title">
-      <strong>{{ universitat.nom_universitat }}</strong>
-    </h1>
+    <h1 class="page-title d-flex align-items-center gap-3">
+      {% if universitat.domini %}
+        <img
+          src="{% static 'favicons/'|add:universitat.domini|add:'.png' %}"
+          width="40" height="40"
+          style="border-radius: 6px; object-fit: contain;"
+          onerror="this.style.display='none';"
+        >
+      {% endif %}
+  <strong>{{ universitat.nom_universitat }}</strong>
+</h1>
     <p class="subtitle">
       {% if universitat.facultat %}
         {{ universitat.facultat }} ·
