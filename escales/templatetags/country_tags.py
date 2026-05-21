@@ -151,7 +151,9 @@ COUNTRY_FLAGS = {
 @register.simple_tag
 def flag_icon(pais):
     nom = str(pais).upper() if pais else ""
+    print(f"DEBUG flag_icon: '{nom}'")
     code = COUNTRY_FLAGS.get(nom)
+    print(f"DEBUG code: '{code}'")
     if code:
         return mark_safe(f'<span class="fi fi-{code}"></span>')
     return mark_safe("🌍")
