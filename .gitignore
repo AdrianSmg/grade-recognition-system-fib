@@ -11,6 +11,12 @@ venv/
 # Django
 db.sqlite3
 
+# Dades sensibles
+*.xlsx
+*.csv
+media/
+tmp/
+
 # Logs
 *.log
 
