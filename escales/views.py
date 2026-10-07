@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Escala, ValorEscala, Universitat
 from collections import defaultdict
+from .services.grade_converter import grade_converter
 
 
 # Create your views here.
@@ -24,10 +25,19 @@ def id(request, slug):
     universitats = Universitat.objects.filter(
         escala=escala_act,
     )
+    valor_origen = request.GET.get("valor_origen", "").strip()
+    resultat = None
+    no_trobat = False
+    if valor_origen:
+        resultat = grade_converter(escala_act, valor_origen)
+        no_trobat = resultat is None
     context = {
         "escala_act": escala_act,
         "valors_escala_act": valors_escala_act,
         "universitats": universitats,
+        "valor_origen": valor_origen,
+        "resultat": resultat,
+        "no_trobat": no_trobat,
     }
     return render(request, "escales/id.html", context)
 
@@ -52,13 +62,20 @@ def universitats(request):
 def id_universitat(request, slug):
     universitat = get_object_or_404(Universitat, slug=slug)
     escales = universitat.escala.all()
+    escala_consultada = request.GET.get("escala", "")
+    valor_origen = request.GET.get("valor_origen", "").strip()
     escales_amb_valors = []
     for escala in escales:
         valors = ValorEscala.objects.filter(escala=escala)
+        consultada = valor_origen and escala_consultada == str(escala.pk)
+        resultat = grade_converter(escala, valor_origen) if consultada else None
         escales_amb_valors.append(
             {
                 "escala": escala,
                 "valors": valors,
+                "valor_origen": valor_origen if consultada else "",
+                "resultat": resultat,
+                "no_trobat": consultada and resultat is None,
             }
         )
     context = {

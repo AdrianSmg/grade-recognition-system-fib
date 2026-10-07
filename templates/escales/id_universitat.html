@@ -64,7 +64,7 @@
   {% include "includes/navbar.html" %}
   <main class="container mt-5">
     <a href="{% url 'universitats' %}" class="btn btn-primary mb-4">
-      ← Tornar a les universitats
+      Tornar a les universitats
     </a>
     <h1 class="page-title d-flex align-items-center gap-3">
       {% if universitat.domini %}
@@ -89,37 +89,48 @@
         Escala: <strong>{{ item.escala.id_escala }}</strong>
       </h2>
 
-      <div class="card mb-4">
+      <div class="card mb-4" id="conversor_{{ forloop.counter }}">
         <div class="card-body">
           <h3 class="h5 mb-4"><strong>Conversor</strong></h3>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label for="valor_origen_{{ forloop.counter }}" class="form-label">Valor d'origen</label>
-              <input
-                type="text"
-                class="form-control form-control-lg valor-origen"
-                id="valor_origen_{{ forloop.counter }}"
-                placeholder="Introdueix el valor"
-                data-index="{{ forloop.counter }}"
-              >
+          <form method="get" action="#conversor_{{ forloop.counter }}">
+            <input type="hidden" name="escala" value="{{ item.escala.pk }}">
+            <div class="row g-3 align-items-end">
+              <div class="col-md-5">
+                <label for="valor_origen_{{ forloop.counter }}" class="form-label">Valor d'origen</label>
+                <input
+                  type="text"
+                  class="form-control form-control-lg" style="font-size: 0.9rem;"
+                  id="valor_origen_{{ forloop.counter }}"
+                  name="valor_origen"
+                  value="{{ item.valor_origen }}"
+                  placeholder="Introdueix el valor"
+                >
+              </div>
+              <div class="col-md-5">
+                <label for="valor_upc_{{ forloop.counter }}" class="form-label">Valor UPC</label>
+                <input
+                  type="text"
+                  class="form-control form-control-lg" style="font-size: 0.9rem;"
+                  id="valor_upc_{{ forloop.counter }}"
+                  value="{% if item.resultat is not None %}{{ item.resultat }}{% endif %}"
+                  readonly
+                  placeholder="Resultat"
+                >
+              </div>
+              <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-primary btn-lg" style="font-size: 0.9rem;">Converteix</button>
+              </div>
             </div>
-            <div class="col-md-6">
-              <label for="valor_upc_{{ forloop.counter }}" class="form-label">Valor UPC</label>
-              <input
-                type="text"
-                class="form-control form-control-lg"
-                id="valor_upc_{{ forloop.counter }}"
-                readonly
-                placeholder="Resultat"
-              >
-            </div>
-          </div>
+            {% if item.no_trobat %}
+              <p class="text-danger mt-3 mb-0">El valor «{{ item.valor_origen }}» no existeix en aquesta escala.</p>
+            {% endif %}
+          </form>
         </div>
       </div>
 
       <div class="card mb-5">
         <div class="card-body p-0">
-          <table class="table table-striped table-hover mb-0" id="taula_{{ forloop.counter }}">
+          <table class="table table-striped table-hover mb-0">
             <thead>
               <tr>
                 <th class="ps-4">Valor origen</th>
@@ -129,10 +140,7 @@
             </thead>
             <tbody>
               {% for valor in item.valors %}
-                <tr
-                  data-origen="{{ valor.valor_origen }}"
-                  data-upc="{{ valor.valor_upc }}"
-                >
+                <tr>
                   <td class="align-middle ps-4">{{ valor.valor_origen }}</td>
                   <td class="align-middle">{{ valor.valor_upc }}</td>
                   <td class="align-middle text-end pe-4">
@@ -160,23 +168,5 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.querySelectorAll('.valor-origen').forEach(function(input) {
-      input.addEventListener('input', function() {
-        const index = this.dataset.index;
-        const valorIntroduït = this.value.trim();
-        const taula = document.getElementById('taula_' + index);
-        const outputInput = document.getElementById('valor_upc_' + index);
-        let trobat = false;
-        taula.querySelectorAll('tbody tr').forEach(function(fila) {
-          if (fila.dataset.origen === valorIntroduït) {
-            outputInput.value = fila.dataset.upc;
-            trobat = true;
-          }
-        });
-        if (!trobat) outputInput.value = '';
-      });
-    });
-  </script>
 </body>
 </html>
